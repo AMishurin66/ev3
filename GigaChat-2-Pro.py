@@ -27,7 +27,7 @@ args = parser.parse_args()
 PROMPT = args.command
 
 # Настройки брокера
-MQTT_BROKER = "localhost"  # Публичный тестовый брокер
+MQTT_BROKER = "78.153.4.205"  # localhost Публичный тестовый брокер
 MQTT_PORT = 1883
 MQTT_TOPIC = "nodered/commands"
 
@@ -194,8 +194,8 @@ with GigaChat(credentials=MY_AUTH_KEY, verify_ssl_certs=False) as client:
 
 
         # 2. Загружаем изображение
-ты
-
+        with open("D:/wificam.jpg", "rb") as f:
+            uploaded_file = client.upload_file(f, purpose="general")
         file_id = uploaded_file.id_
         print(f"Файл успешно загружен. ID: {file_id}")
 
