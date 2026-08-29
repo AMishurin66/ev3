@@ -9,7 +9,7 @@ from gigachat.models import Function
 import json
 
 # Замените строку ниже на ваш реальный ключ авторизации из Сбер Студии
-MY_AUTH_KEY = "..."
+MY_AUTH_KEY = "MDE5ZmZmZTQtYjEwMC03ODA0LWJjNmMtMzZlNDI5OWZlZmYwOjMyNjk1NTg3LWY2ZDItNGViZi1iNTI2LTA2M2FiMjMyM2Q3Mw=="
 
 # PROMPT = 'Ты робот. Используя инструменты: выстрели. Опиши, что ты видишь , потом иди вперед 20 см, потом повернись направо на 90 градусов, шагни назад на 20 см потом обернись назад'
 
