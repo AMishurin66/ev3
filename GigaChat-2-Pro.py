@@ -15,23 +15,23 @@ from gigachat.models import Function
 
 import json
 
-# Замените строку ниже на ваш реальный ключ авторизации из Сбер Студии
-MY_AUTH_KEY = "..."
+# Р—Р°РјРµРЅРёС‚Рµ СЃС‚СЂРѕРєСѓ РЅРёР¶Рµ РЅР° РІР°С€ СЂРµР°Р»СЊРЅС‹Р№ РєР»СЋС‡ Р°РІС‚РѕСЂРёР·Р°С†РёРё РёР· РЎР±РµСЂ РЎС‚СѓРґРёРё
+MY_AUTH_KEY = "MDE5ZmZmZTQtYjEwMC03ODA0LWJjNmMtMzZlNDI5OWZlZmYwOjMyNjk1NTg3LWY2ZDItNGViZi1iNTI2LTA2M2FiMjMyM2Q3Mw=="
 
-PROMPT = 'Ты робот. Используя инструменты: выстрели. Опиши, что ты видишь (приложенный файл)' #, потом иди вперед 20 см, потом повернись направо на 90 градусов, шагни назад на 20 см потом обернись назад'
-# PROMPT = 'Ты робот. Опиши, что на картинке. Используя инструменты: выстрели'
-parser = argparse.ArgumentParser(description="Управление роботом")
-parser.add_argument("--command", type=str, default=PROMPT, help="Команда роботу")
+PROMPT = 'РўС‹ СЂРѕР±РѕС‚. РСЃРїРѕР»СЊР·СѓСЏ РёРЅСЃС‚СЂСѓРјРµРЅС‚С‹: РІС‹СЃС‚СЂРµР»Рё. РћРїРёС€Рё, С‡С‚Рѕ С‚С‹ РІРёРґРёС€СЊ (РїСЂРёР»РѕР¶РµРЅРЅС‹Р№ С„Р°Р№Р»)' #, РїРѕС‚РѕРј РёРґРё РІРїРµСЂРµРґ 20 СЃРј, РїРѕС‚РѕРј РїРѕРІРµСЂРЅРёСЃСЊ РЅР°РїСЂР°РІРѕ РЅР° 90 РіСЂР°РґСѓСЃРѕРІ, С€Р°РіРЅРё РЅР°Р·Р°Рґ РЅР° 20 СЃРј РїРѕС‚РѕРј РѕР±РµСЂРЅРёСЃСЊ РЅР°Р·Р°Рґ'
+# PROMPT = 'РўС‹ СЂРѕР±РѕС‚. РћРїРёС€Рё, С‡С‚Рѕ РЅР° РєР°СЂС‚РёРЅРєРµ. РСЃРїРѕР»СЊР·СѓСЏ РёРЅСЃС‚СЂСѓРјРµРЅС‚С‹: РІС‹СЃС‚СЂРµР»Рё'
+parser = argparse.ArgumentParser(description="РЈРїСЂР°РІР»РµРЅРёРµ СЂРѕР±РѕС‚РѕРј")
+parser.add_argument("--command", type=str, default=PROMPT, help="РљРѕРјР°РЅРґР° СЂРѕР±РѕС‚Сѓ")
 
 args = parser.parse_args()
 PROMPT = args.command
 
-# Настройки брокера
-MQTT_BROKER = "localhost"  # Публичный тестовый брокер
+# РќР°СЃС‚СЂРѕР№РєРё Р±СЂРѕРєРµСЂР°
+MQTT_BROKER = "localhost"  # РџСѓР±Р»РёС‡РЅС‹Р№ С‚РµСЃС‚РѕРІС‹Р№ Р±СЂРѕРєРµСЂ
 MQTT_PORT = 1883
 MQTT_TOPIC = "nodered/commands"
 
-# Находим окно по части названия (например, 'Notepad' или 'Блокнот')
+# РќР°С…РѕРґРёРј РѕРєРЅРѕ РїРѕ С‡Р°СЃС‚Рё РЅР°Р·РІР°РЅРёСЏ (РЅР°РїСЂРёРјРµСЂ, 'Notepad' РёР»Рё 'Р‘Р»РѕРєРЅРѕС‚')
 window_title = "e2eSoft iVCam"
 windows = gw.getWindowsWithTitle(window_title)
 
@@ -39,30 +39,30 @@ windows = gw.getWindowsWithTitle(window_title)
 def camera():
     if windows:
         win = windows[0]
-        # Получаем координаты и размеры
+        # РџРѕР»СѓС‡Р°РµРј РєРѕРѕСЂРґРёРЅР°С‚С‹ Рё СЂР°Р·РјРµСЂС‹
         left, top, width, height = win.left, win.top, win.width, win.height
-        # Делаем скриншот конкретной области экрана
+        # Р”РµР»Р°РµРј СЃРєСЂРёРЅС€РѕС‚ РєРѕРЅРєСЂРµС‚РЅРѕР№ РѕР±Р»Р°СЃС‚Рё СЌРєСЂР°РЅР°
         screenshot = pyautogui.screenshot(region=(left + 8, top + 31, width - 16, height - 95))
-        # Сохраняем файл
+        # РЎРѕС…СЂР°РЅСЏРµРј С„Р°Р№Р»
         screenshot.save("d:/wificam.jpg")
-        # print("Скриншот успешно сохранен!")
+        # print("РЎРєСЂРёРЅС€РѕС‚ СѓСЃРїРµС€РЅРѕ СЃРѕС…СЂР°РЅРµРЅ!")
     else:
-        print(f"Окно с названием '{window_title}' не найдено.")
+        print(f"РћРєРЅРѕ СЃ РЅР°Р·РІР°РЅРёРµРј '{window_title}' РЅРµ РЅР°Р№РґРµРЅРѕ.")
 
 
 def repeated_task():
     while True:
         camera()
-        time.sleep(1)  # Пауза на 1 секунду
+        time.sleep(1)  # РџР°СѓР·Р° РЅР° 1 СЃРµРєСѓРЅРґСѓ
 
-# Создаём и запускаем поток
+# РЎРѕР·РґР°С‘Рј Рё Р·Р°РїСѓСЃРєР°РµРј РїРѕС‚РѕРє
 thread = threading.Thread(target=repeated_task, name="RepeatingThread")
 thread.start()
 
 
-# 1. Объясняем функцию с помощью аннотаций и docstring
+# 1. РћР±СЉСЏСЃРЅСЏРµРј С„СѓРЅРєС†РёСЋ СЃ РїРѕРјРѕС‰СЊСЋ Р°РЅРЅРѕС‚Р°С†РёР№ Рё docstring
 def move_forward(cm: int) -> str:
-    """Отправляет команду на движение вперед на указанное число сантиметров."""
+    """РћС‚РїСЂР°РІР»СЏРµС‚ РєРѕРјР°РЅРґСѓ РЅР° РґРІРёР¶РµРЅРёРµ РІРїРµСЂРµРґ РЅР° СѓРєР°Р·Р°РЅРЅРѕРµ С‡РёСЃР»Рѕ СЃР°РЅС‚РёРјРµС‚СЂРѕРІ."""
     publish.single(
         topic=MQTT_TOPIC,
         payload="MOVE_FORWARD " + str(cm),
@@ -72,7 +72,7 @@ def move_forward(cm: int) -> str:
     return f"MOVE_FORWARD {cm}"
 
 def move_backward(cm: int) -> str:
-    """Отправляет команду на движение назад на указанное число сантиметров."""
+    """РћС‚РїСЂР°РІР»СЏРµС‚ РєРѕРјР°РЅРґСѓ РЅР° РґРІРёР¶РµРЅРёРµ РЅР°Р·Р°Рґ РЅР° СѓРєР°Р·Р°РЅРЅРѕРµ С‡РёСЃР»Рѕ СЃР°РЅС‚РёРјРµС‚СЂРѕРІ."""
     publish.single(
         topic=MQTT_TOPIC,
         payload="MOVE_BACKWARD " + str(cm),
@@ -82,7 +82,7 @@ def move_backward(cm: int) -> str:
     return f"MOVE_BACKWARD {cm}"
 
 def turn_left(degrees: int) -> str:
-    """Отправляет команду на поворот налево на указанное число градусов."""
+    """РћС‚РїСЂР°РІР»СЏРµС‚ РєРѕРјР°РЅРґСѓ РЅР° РїРѕРІРѕСЂРѕС‚ РЅР°Р»РµРІРѕ РЅР° СѓРєР°Р·Р°РЅРЅРѕРµ С‡РёСЃР»Рѕ РіСЂР°РґСѓСЃРѕРІ."""
     publish.single(
         topic=MQTT_TOPIC,
         payload="TURN_LEFT " + str(degrees),
@@ -92,7 +92,7 @@ def turn_left(degrees: int) -> str:
     return f"TURN_LEFT {degrees}"
 
 def turn_right(degrees: int) -> str:
-    """Отправляет команду на поворот направо на указанное число градусов."""
+    """РћС‚РїСЂР°РІР»СЏРµС‚ РєРѕРјР°РЅРґСѓ РЅР° РїРѕРІРѕСЂРѕС‚ РЅР°РїСЂР°РІРѕ РЅР° СѓРєР°Р·Р°РЅРЅРѕРµ С‡РёСЃР»Рѕ РіСЂР°РґСѓСЃРѕРІ."""
     publish.single(
         topic=MQTT_TOPIC,
         payload="TURN_RIGHT " + str(degrees),
@@ -102,7 +102,7 @@ def turn_right(degrees: int) -> str:
     return f"TURN_RIGHT {degrees}"
 
 def fire() -> str:
-    """Отправляет команду на выстрел/действие."""
+    """РћС‚РїСЂР°РІР»СЏРµС‚ РєРѕРјР°РЅРґСѓ РЅР° РІС‹СЃС‚СЂРµР»/РґРµР№СЃС‚РІРёРµ."""
     publish.single(
         topic=MQTT_TOPIC,
         payload="FIRE",
@@ -112,55 +112,55 @@ def fire() -> str:
     return "FIRE"
 
 # tools = [move_forward, move_backward, turn_left, turn_right, fire,]
-# Описываем функции в формате, который понимает GigaChat SDK
+# РћРїРёСЃС‹РІР°РµРј С„СѓРЅРєС†РёРё РІ С„РѕСЂРјР°С‚Рµ, РєРѕС‚РѕСЂС‹Р№ РїРѕРЅРёРјР°РµС‚ GigaChat SDK
 tools = [
     Function(
         name="move_forward",
-        description="Отправляет команду на движение вперед на указанное число сантиметров.",
+        description="РћС‚РїСЂР°РІР»СЏРµС‚ РєРѕРјР°РЅРґСѓ РЅР° РґРІРёР¶РµРЅРёРµ РІРїРµСЂРµРґ РЅР° СѓРєР°Р·Р°РЅРЅРѕРµ С‡РёСЃР»Рѕ СЃР°РЅС‚РёРјРµС‚СЂРѕРІ.",
         parameters={
             "type": "object",
             "properties": {
-                "cm": {"type": "integer", "description": "Расстояние в сантиметрах"}
+                "cm": {"type": "integer", "description": "Р Р°СЃСЃС‚РѕСЏРЅРёРµ РІ СЃР°РЅС‚РёРјРµС‚СЂР°С…"}
             },
             "required": ["cm"]
         }
     ),
     Function(
         name="move_backward",
-        description="Отправляет команду на движение назад на указанное число сантиметров.",
+        description="РћС‚РїСЂР°РІР»СЏРµС‚ РєРѕРјР°РЅРґСѓ РЅР° РґРІРёР¶РµРЅРёРµ РЅР°Р·Р°Рґ РЅР° СѓРєР°Р·Р°РЅРЅРѕРµ С‡РёСЃР»Рѕ СЃР°РЅС‚РёРјРµС‚СЂРѕРІ.",
         parameters={
             "type": "object",
             "properties": {
-                "cm": {"type": "integer", "description": "Расстояние в сантиметрах"}
+                "cm": {"type": "integer", "description": "Р Р°СЃСЃС‚РѕСЏРЅРёРµ РІ СЃР°РЅС‚РёРјРµС‚СЂР°С…"}
             },
             "required": ["cm"]
         }
     ),
     Function(
         name="turn_left",
-        description="Отправляет команду на поворот налево на указанное число градусов.",
+        description="РћС‚РїСЂР°РІР»СЏРµС‚ РєРѕРјР°РЅРґСѓ РЅР° РїРѕРІРѕСЂРѕС‚ РЅР°Р»РµРІРѕ РЅР° СѓРєР°Р·Р°РЅРЅРѕРµ С‡РёСЃР»Рѕ РіСЂР°РґСѓСЃРѕРІ.",
         parameters={
             "type": "object",
             "properties": {
-                "degrees": {"type": "integer", "description": "Угол поворота в градусах"}
+                "degrees": {"type": "integer", "description": "РЈРіРѕР» РїРѕРІРѕСЂРѕС‚Р° РІ РіСЂР°РґСѓСЃР°С…"}
             },
             "required": ["degrees"]
         }
     ),
     Function(
         name="turn_right",
-        description="Отправляет команду на поворот направо на указанное число градусов.",
+        description="РћС‚РїСЂР°РІР»СЏРµС‚ РєРѕРјР°РЅРґСѓ РЅР° РїРѕРІРѕСЂРѕС‚ РЅР°РїСЂР°РІРѕ РЅР° СѓРєР°Р·Р°РЅРЅРѕРµ С‡РёСЃР»Рѕ РіСЂР°РґСѓСЃРѕРІ.",
         parameters={
             "type": "object",
             "properties": {
-                "degrees": {"type": "integer", "description": "Угол поворота в градусах"}
+                "degrees": {"type": "integer", "description": "РЈРіРѕР» РїРѕРІРѕСЂРѕС‚Р° РІ РіСЂР°РґСѓСЃР°С…"}
             },
             "required": ["degrees"]
         }
     ),
     Function(
         name="fire",
-        description="Отправляет команду на выстрел или действие.",
+        description="РћС‚РїСЂР°РІР»СЏРµС‚ РєРѕРјР°РЅРґСѓ РЅР° РІС‹СЃС‚СЂРµР» РёР»Рё РґРµР№СЃС‚РІРёРµ.",
         parameters={
             "type": "object",
             "properties": {},
@@ -177,90 +177,104 @@ tool_map = {
     fire.__name__: fire,
 }
 
-# Инициализируем клиент напрямую через credentials
+# РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РєР»РёРµРЅС‚ РЅР°РїСЂСЏРјСѓСЋ С‡РµСЂРµР· credentials
 with GigaChat(credentials=MY_AUTH_KEY, verify_ssl_certs=False) as client:
-    # 1. Загружаем изображение
-    with open("D:/wificam.jpg", "rb") as f:
-        uploaded_file = client.upload_file(f, purpose="general")
+    while True:
+        # 1. РџРѕР»СѓС‡Р°РµРј Р·Р°РїСЂРѕСЃ
+        user_input = input("?: ").strip()
 
-    file_id = uploaded_file.id_
-    print(f"Файл успешно загружен. ID: {file_id}")
+        if user_input.lower() in ("quit", "exit"):
+            print("Р’С‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹.")
+            break
 
-    # 1. Создаем стартовую историю сообщений
-    messages_history = [
-        Messages(
-            role=MessagesRole.USER,
-            content=PROMPT,
-            attachments=[file_id]  # Прикрепляем ID загруженного фото
-        )
-    ]
-
-    # Флаг для работы цикла перебора
-    continue_execution = True
-
-    while continue_execution:
-        # Формируем запрос к нейросети с актуальной историей
-        print("PROMPT: ", messages_history)
-        payload = Chat(
-            model="GigaChat-2-Pro",
-            messages=messages_history,
-            functions=tools
-        )
-
-        # Получаем ответ от GigaChat
-        response = client.chat(payload)
-        message = response.choices[0].message
-
-        # Обязательно добавляем ответ модели в историю, чтобы она помнила свои действия
-        messages_history.append(message)
-
-        # Проверяем, вызвала ли модель инструмент
-        if message.function_call:
-            name = message.function_call.name
-            args = message.function_call.arguments
-
-            # Распаковываем аргументы, если они пришли строкой
-            if isinstance(args, str):
-                try:
-                    args = json.loads(args)
-                except json.JSONDecodeError:
-                    args = {}
-
-            print(f"--- Выполняется инструмент: {name} ({args}) ---")
-
-            if name in tool_map:
-                # Вызываем функцию из вашего маппинга
-                fn = tool_map[name]
-                result = fn(**args)
-                print(f"Результат работы функции {name}: {result}")
-
-                json_result = json.dumps({"status": "success", "return_value": result}, ensure_ascii=False)
-
-                # Отправляем результат выполнения обратно модели [3]
-                messages_history.append(
-                    Messages(
-                        role=MessagesRole.FUNCTION,
-                        name=name,
-                        content=json_result
-                    )
-                )
-            else:
-                print(f"Ошибка: Функция {name} отсутствует в tool_map.")
-                # Сообщаем модели об ошибке, чтобы она не зациклилась
-                messages_history.append(
-                    Messages(
-                        role=MessagesRole.FUNCTION,
-                        name=name,
-                        content="Error: function not found"
-                    )
-                )
+        if not user_input:
+            user_input = current_command
         else:
-            # Если function_call отсутствует, значит модель закончила перебор инструментов
-            # и сформировала финальный текстовый ответ
-            print("\n--- Все инструменты успешно выполнены! ---")
-            print("Финальный ответ ИИ:", message.content)
-            continue_execution = False
+            current_command = user_input
 
-    # 4. Удаляем файл из хранилища после завершения всех шагов
-    client.delete_file(file_id)
-    print(f"Файл {file_id} успешно удален.")
+
+        # 2. Р—Р°РіСЂСѓР¶Р°РµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ
+С‚С‹
+
+        file_id = uploaded_file.id_
+        print(f"Р¤Р°Р№Р» СѓСЃРїРµС€РЅРѕ Р·Р°РіСЂСѓР¶РµРЅ. ID: {file_id}")
+
+
+        # 3. РЎРѕР·РґР°РµРј СЃС‚Р°СЂС‚РѕРІСѓСЋ РёСЃС‚РѕСЂРёСЋ СЃРѕРѕР±С‰РµРЅРёР№
+        messages_history = [
+            Messages(
+                role=MessagesRole.USER,
+                content=user_input,
+                attachments=[file_id]  # РџСЂРёРєСЂРµРїР»СЏРµРј ID Р·Р°РіСЂСѓР¶РµРЅРЅРѕРіРѕ С„РѕС‚Рѕ
+            )
+        ]
+
+        # Р¤Р»Р°Рі РґР»СЏ СЂР°Р±РѕС‚С‹ С†РёРєР»Р° РїРµСЂРµР±РѕСЂР°
+        continue_execution = True
+
+        while continue_execution:
+            # Р¤РѕСЂРјРёСЂСѓРµРј Р·Р°РїСЂРѕСЃ Рє РЅРµР№СЂРѕСЃРµС‚Рё СЃ Р°РєС‚СѓР°Р»СЊРЅРѕР№ РёСЃС‚РѕСЂРёРµР№
+            # print("PROMPT: ", messages_history)
+            payload = Chat(
+                model="GigaChat-2-Pro",
+                messages=messages_history,
+                functions=tools
+            )
+
+            # РџРѕР»СѓС‡Р°РµРј РѕС‚РІРµС‚ РѕС‚ GigaChat
+            response = client.chat(payload)
+            message = response.choices[0].message
+
+            # РћР±СЏР·Р°С‚РµР»СЊРЅРѕ РґРѕР±Р°РІР»СЏРµРј РѕС‚РІРµС‚ РјРѕРґРµР»Рё РІ РёСЃС‚РѕСЂРёСЋ, С‡С‚РѕР±С‹ РѕРЅР° РїРѕРјРЅРёР»Р° СЃРІРѕРё РґРµР№СЃС‚РІРёСЏ
+            messages_history.append(message)
+
+            # РџСЂРѕРІРµСЂСЏРµРј, РІС‹Р·РІР°Р»Р° Р»Рё РјРѕРґРµР»СЊ РёРЅСЃС‚СЂСѓРјРµРЅС‚
+            if message.function_call:
+                name = message.function_call.name
+                args = message.function_call.arguments
+
+                # Р Р°СЃРїР°РєРѕРІС‹РІР°РµРј Р°СЂРіСѓРјРµРЅС‚С‹, РµСЃР»Рё РѕРЅРё РїСЂРёС€Р»Рё СЃС‚СЂРѕРєРѕР№
+                if isinstance(args, str):
+                    try:
+                        args = json.loads(args)
+                    except json.JSONDecodeError:
+                        args = {}
+
+                print(f"--- Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ РёРЅСЃС‚СЂСѓРјРµРЅС‚: {name} ({args}) ---")
+
+                if name in tool_map:
+                    # Р’С‹Р·С‹РІР°РµРј С„СѓРЅРєС†РёСЋ РёР· РІР°С€РµРіРѕ РјР°РїРїРёРЅРіР°
+                    fn = tool_map[name]
+                    result = fn(**args)
+                    print(f"Р РµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ С„СѓРЅРєС†РёРё {name}: {result}")
+
+                    json_result = json.dumps({"status": "success", "return_value": result}, ensure_ascii=False)
+
+                    # РћС‚РїСЂР°РІР»СЏРµРј СЂРµР·СѓР»СЊС‚Р°С‚ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕР±СЂР°С‚РЅРѕ РјРѕРґРµР»Рё [3]
+                    messages_history.append(
+                        Messages(
+                            role=MessagesRole.FUNCTION,
+                            name=name,
+                            content=json_result
+                        )
+                    )
+                else:
+                    print(f"РћС€РёР±РєР°: Р¤СѓРЅРєС†РёСЏ {name} РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РІ tool_map.")
+                    # РЎРѕРѕР±С‰Р°РµРј РјРѕРґРµР»Рё РѕР± РѕС€РёР±РєРµ, С‡С‚РѕР±С‹ РѕРЅР° РЅРµ Р·Р°С†РёРєР»РёР»Р°СЃСЊ
+                    messages_history.append(
+                        Messages(
+                            role=MessagesRole.FUNCTION,
+                            name=name,
+                            content="Error: function not found"
+                        )
+                    )
+            else:
+                # Р•СЃР»Рё function_call РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚, Р·РЅР°С‡РёС‚ РјРѕРґРµР»СЊ Р·Р°РєРѕРЅС‡РёР»Р° РїРµСЂРµР±РѕСЂ РёРЅСЃС‚СЂСѓРјРµРЅС‚РѕРІ
+                # Рё СЃС„РѕСЂРјРёСЂРѕРІР°Р»Р° С„РёРЅР°Р»СЊРЅС‹Р№ С‚РµРєСЃС‚РѕРІС‹Р№ РѕС‚РІРµС‚
+                print("\n--- Р’СЃРµ РёРЅСЃС‚СЂСѓРјРµРЅС‚С‹ СѓСЃРїРµС€РЅРѕ РІС‹РїРѕР»РЅРµРЅС‹! ---")
+                print("Р¤РёРЅР°Р»СЊРЅС‹Р№ РѕС‚РІРµС‚ РР:", message.content)
+                continue_execution = False
+
+        # 4. РЈРґР°Р»СЏРµРј С„Р°Р№Р» РёР· С…СЂР°РЅРёР»РёС‰Р° РїРѕСЃР»Рµ Р·Р°РІРµСЂС€РµРЅРёСЏ РІСЃРµС… С€Р°РіРѕРІ
+        client.delete_file(file_id)
+        print(f"Р¤Р°Р№Р» {file_id} СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅ.")
